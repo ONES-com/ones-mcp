@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.ones/ones",
+  "title": "ONES",
+  "description": "Manage ONES projects, issues, tests, work hours, and Wiki knowledge.",
+  "version": "1.0.3",
+  "repository": {
+    "url": "https://github.com/ONES-com/ones-github-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://ones.com/features/mcp",
+  "icons": [
+    {
+      "src": "https://ones.com/assets/brand/ones-icon-512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://us.ones.com/mcp"
+    }
+  ]
+}

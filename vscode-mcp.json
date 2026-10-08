@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "ones": {
+      "type": "http",
+      "url": "https://us.ones.com/mcp"
+    }
+  }
+}
