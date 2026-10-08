@@ -94,7 +94,7 @@ Use **MCP: List Servers** to stop the `ones` server. To remove the connection co
 - **An operation is denied:** confirm your ONES permissions and the workspace's enabled capabilities with an administrator.
 - **MCP is restricted:** ask your organization's administrator whether this server is allowed.
 
-For reproducible integration problems, [open an issue](https://github.com/ONES-com/ones-github-mcp/issues) with the client version and a sanitized error message. Never include tokens, credentials, or private workspace data.
+For reproducible integration problems, [open an issue](https://github.com/ONES-com/ones-mcp/issues) with the client version and a sanitized error message. Never include tokens, credentials, or private workspace data.
 
 ## Registry metadata
 
