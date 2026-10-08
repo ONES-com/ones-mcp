@@ -22,15 +22,15 @@ This endpoint serves the US deployment. Other regional or private deployments ma
 
 1. Open the Command Palette and run **MCP: Add Server**.
 2. Select **HTTP** and enter `https://us.ones.com/mcp`.
-3. Name the server `ones` and choose the desired configuration scope.
+3. Name the server `ones`. For a new workspace connection, choose `.mcp.json`; for access across projects, choose the global configuration option offered by your client.
 4. Start the server and confirm trust when prompted. Complete the browser-based OAuth authorization: sign in to ONES and review the requested access.
 5. Open Copilot Chat in an agent mode that supports tools. Use **Configure Tools** to confirm that the ONES tools are available.
 
-Alternatively, merge the following entry into your workspace's `.vscode/mcp.json` (preserve any existing servers):
+Alternatively, create `.mcp.json` in your own project's root using the following configuration. If the file already exists, merge the `ones` entry into its `mcpServers` object:
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "ones": {
       "type": "http",
       "url": "https://us.ones.com/mcp"
@@ -39,18 +39,53 @@ Alternatively, merge the following entry into your workspace's `.vscode/mcp.json
 }
 ```
 
-The same configuration is provided in [vscode-mcp.json](vscode-mcp.json). For a portable workspace configuration, use [.mcp.json format](portable-mcp.json) at the root of your own project. Cloning this documentation repository is not required to connect.
+Copyable examples: [portable-mcp.json](portable-mcp.json) uses the `.mcp.json` format above; [vscode-mcp.json](vscode-mcp.json) uses the `servers` format for existing `.vscode/mcp.json` setups. Configure the server in one location to avoid duplicate entries. Cloning this repository or running a local ONES server is not required.
 
 ONES uses OAuth authorization. Do not put passwords, access tokens, or client secrets in configuration files committed to Git. Access remains subject to the authorized ONES user's permissions.
 
-## Example prompts
+## Verify the connection
 
-- "List the ONES projects I can access."
-- "Show the issues assigned to me in the project I select."
-- "Search ONES Wiki for our release process and summarize the results."
-- "Create an issue in the project I select, using the title and description I provide."
+After saving the configuration, run **MCP: List Servers**, select `ones`, and start the server if needed. Complete the browser authorization with the ONES account you intend to use, then return to VS Code. In Copilot Chat, open **Configure Tools** and check that ONES tools are available and enabled.
 
-Start with a read-only request to verify the connection. Before approving a write action, review the target workspace, project, and proposed changes. Use a test workspace when evaluating write operations.
+Send this first request:
+
+> Use ONES to list the projects I can access. Do not change any data.
+
+A successful check returns actual accessible project results, or an explicit empty result if the account has no accessible projects. A generic answer about ONES does not verify a tool call: expand Copilot's tool activity and confirm that an ONES tool ran successfully. If authorization or a tool call fails, use the troubleshooting steps below.
+
+## Use ONES in Copilot Chat
+
+Choose a chat mode that supports tools and enable the relevant ONES tools. State the project, issue, or Wiki page you want to work with. When names are ambiguous, ask Copilot to show matching records before proceeding. Replace angle-bracket placeholders below with your own values.
+
+### Find and summarize work
+
+> Use ONES to find the project named `<project name>`. If multiple projects match, let me choose. Then list the issues assigned to me in that project, including their titles and statuses. Do not modify anything.
+
+Use the returned issue identifiers for follow-up requests:
+
+> Retrieve ONES issue `<issue ID>` and summarize its description, status, and comments.
+
+### Retrieve workspace knowledge
+
+> Search my authorized ONES Wiki content for `<release process>`. Show the matching page titles, retrieve the relevant page, and summarize the release steps. Include the source page link if one is returned.
+
+Results depend on the Wiki content the authorized account can access.
+
+### Create an issue
+
+> In ONES project `<project name>`, prepare an issue titled `<title>` with this description: `<description>`. Ask me for any required fields that are missing, and show the target project, issue type, and proposed fields before creating it.
+
+Review the proposed values, then ask Copilot to create the issue. If VS Code requests tool approval, review the operation before approving it. Check the returned issue identifier and open the issue in ONES to verify the saved result. Use a test project when evaluating write operations.
+
+### Update an existing issue
+
+> Retrieve ONES issue `<issue ID>`. Show its current status and the available target statuses, then ask me which status to use before updating it.
+
+Check the resulting record in ONES after the update. Available operations and required fields vary with workspace configuration and account permissions.
+
+## Disconnect
+
+Use **MCP: List Servers** to stop the `ones` server. To remove the connection configuration, delete only its entry from the configuration file you selected. Stopping or removing the client configuration does not itself revoke an existing OAuth grant; manage that authorization separately in your ONES account settings.
 
 ## Troubleshooting
 
