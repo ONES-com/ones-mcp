@@ -5,7 +5,7 @@
   "description": "Manage ONES projects, issues, tests, work hours, and Wiki knowledge.",
   "version": "1.0.3",
   "repository": {
-    "url": "https://github.com/ONES-com/ones-github-mcp",
+    "url": "https://github.com/ONES-com/ones-mcp",
     "source": "github"
   },
   "websiteUrl": "https://ones.com/features/mcp",
